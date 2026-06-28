@@ -1,0 +1,119 @@
+*, *::after { box-sizing:border-box;margin:0;padding:0}
+
+
+:root{
+    --bg: #0f0f13;
+    --surface:#17171f;
+    --surface2:#1e1e2a;
+    --border:#2a2a3a;
+    --gold:#c9a84c; 
+    --gold-light:#e8c97a;
+    --cream:#f0e6cc;
+    --text:#d4cfc4;
+    --text-dim:#6e6a60;
+    --light-sq: #e8d5b0;
+    --dark-sq:#6b4c2a;
+    --highlits:rgba(201,168,76,0.45);
+    --possible:rgba(201,168,76,0.22);
+    --check:rgba(200,40,40,0.55);
+    --selected:rgba(201,168,76,0,6);
+}
+
+
+.sidebar{
+    width:260px;
+    min-width:260px;
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    padding:24px 20px;
+    gap:20px;
+    overflow-y:auto;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',san-serif;
+    height:100vh;
+    overflow:hidden;
+}
+
+.app{
+    display:flex;
+    height:100vh;
+}
+.sidebar{
+    width:260px;
+    min-width:260px;
+    background:var(--surfae);
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    padding:24px 20px;
+    gap:20px;
+    overflow-Y:auto;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--border);
+}
+
+.login-icon{
+    font-size:28px;
+    color:var(--gold);
+    text-shadow:0 0 12px rgba(201,168,76,0.5);
+}
+
+.log h1{
+    font-family:'Cinzel',serif;
+    font-size:15px;
+    font-weight:900;
+    letter-spacing:3px;
+    color:var(--cream);
+}
+
+.turn-panel{
+background:var(--surface2);
+border:1px solid var(--border);
+border-radius:10px;
+padding:14px 16px;
+}
+
+.turn-label{
+    font-size:10px;
+    letter-spacing:2px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+}
+
+.turn-inductor{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.turn-piece {
+    font-size:26px;
+    line-height:1;
+    transition:all 0.3s;
+}
+
+.turn-name{
+    font-family:'Cinzel',serif;
+    font-size:18px;
+    font-weight:700;
+    color:var(--gold-light);
+     
+}
+
+.status-panel{
+    background:var(--surface2);
+    border:1px solid var(--border);
+    border-radius:
+}
