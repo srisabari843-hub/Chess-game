@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChessGame</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link href="'https.//fonts:googleapis.com/css2?family=Cinzel:wgt@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
     
 
 </head>
@@ -18,9 +20,9 @@
         </div>
     <div class="turn-panel">
         <div class="turn-label">CURRENT TURN</div>
-        <div class="tune-indicator" id="turnIndicator">
+        <div class="turn-indicator" id="turnIndicator">
             <span class="turn-piece" id="turnPiece">♔</span>
-            <span class="turn-name" id="turnName">White</span>
+            <span class="turn-name" id="turnName">WHITE</span>
         </div>
     </div>
 
@@ -28,17 +30,17 @@
         <p id="statusText">Game in Progress...</p>
     </div>
 
-    <div class="captures-panel">
+    <div class="captured-panel">
         <div class="captured-group">
             <div class="captured-label">WHITE captured</div>
-            <div class="captured-piece" id="whiteCaptured"></div>
+            <div class="captured-pieces" id="whiteCaptured"></div>
     </div>
         
         <div class="captured-group">
             <div class="captured-label">BLACK  captured</div>
             <div class="captured-pieces" id="blackCaptured"></div>
         </div>
-
+ 
         <div class="move-history-panel">
             <div class="panel-title">MOVE HISTORY</div>
             <div class="move-list"id=moveList></div>

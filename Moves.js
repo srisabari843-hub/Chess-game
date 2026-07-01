@@ -44,7 +44,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
         }
     
 
-        for (const dc of [-1,-1]){
+        for (const dc of [-1,1]){
             const r=row+dir,c=col+dc;
             if (inBounds(r,c)){
                 if (board[r][c] && pieceColor(board[r][c])!==color){
@@ -57,16 +57,12 @@ function getPseudoMoves(board,row,col,enPassantTarget){
         }
     }
              else if (type==='N'){
-                const knightMoves=[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,2],[2,-1],[2,1]];
-                for (const [dr,dc] of knightMoves) assMove(row+dr,col+dc);
+                const knightMoves=[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+                for (const [dr,dc] of knightMoves) addMove(row+dr,col+dc);
              }
 
             else if (type==='B'){
-                for (const [dr,dc] of [[-1,0],[1,0],[0,-1],[0,1]])slide(dr,dc);
-            }
-
-            else if (type==='R'){
-                for (const[dr,dc] of [[-1,-1],[-1,1],[0,-1],[0,1]]) slide(dr,dc);
+                for (const[dr,dc] of [[-1,-1],[-1,1],[1,-1],[1,1]]) slide(dr,dc);
             }
 
             else if (type==='R'){
@@ -74,15 +70,14 @@ function getPseudoMoves(board,row,col,enPassantTarget){
             }
 
             else if (type==='Q'){
-                 for (const [dr,dc] of [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]]) slide(dr,dc)
+                 for (const [dr,dc] of [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]]) 
+                slide(dr,dc)
             }
 
-            else if(type==='Q'){
-                for (const [dr,dc] of [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]]) slide(dr,dc);
-            }
 
             else if(type==='K'){
-                for (const [dr,dc] of [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]) addMove(row+dr,col+dc);
+                for (const [dr,dc] of [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]) 
+                addMove(row+dr,col+dc);
 
             }
 
@@ -90,7 +85,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
        }
 
       
-       function isAttacked(board,r,c,buColor){
+       function isAttacked(board,r,c,byColor){
         for (let row=0;row<8;row++){
             for (let col=0;col < 8;col++){
                 const code=board[row][col];
@@ -107,7 +102,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
 
        function isInCheck(board,color){
         const kingCode=color==='white' ? 'K' : 'k';
-         const kingRow=-1,kingCol=-1;
+         let kingRow=-1,kingCol=-1;
          for (let r=0;r<8;r++){
             for (let c=0;c<8;c++){
                 if(board[r][c]===kingCode) {
@@ -123,7 +118,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
        }
 
 
-       function getLegalMoves(board,row,enPassantTarget,castleRights){
+       function getLegalMoves(board,row,col,enPassantTarget,castleRights){
         const code=board[row][col];
         if (!code) return [];
         const color=pieceColor(code);
@@ -135,12 +130,12 @@ function getPseudoMoves(board,row,col,enPassantTarget){
             nb[r][c]=code;
             nb[row][col]=null;
              
-            if (code.toUpperCase()==='P' && enPassanttarget && r===enPassantTarget && r==enPassantTarget[0] & c===enPassantTarget[1]){
+            if (code.toUpperCase()==='P' && enPassantTarget && r===enPassantTarget[0] && c===enPassantTarget[1]){
                 const capturedRow=color==='white' ? r+1 : r-1;
                 nb[capturedRow][c]=null;
             }
 
-            if(!isInCkeck(nb,color)) legal.push([r,c]);
+            if(!isInCheck(nb,color)) legal.push([r,c]);
        }
 
        if (code.toUpperCase()==='K' && castleRights){
@@ -149,8 +144,8 @@ function getPseudoMoves(board,row,col,enPassantTarget){
 
         if(!isInCheck(board,color)){
             
-            const ksSide=color==='white' ? castleRights.whiteKingside : castleRights.blackQueenside;
-            if(qsSide && !board[backRow][3] && !board[backRow][2] && !board[backRow][2] && !board[backRow][1])
+            const ksSide=color==='white' ? castleRights.whiteKingside : castleRights.blackKingside;
+            if(ksSide && !board[backRow][3] && !board[backRow][2] && !board[backRow][2] && !board[backRow][1])
             {
                 if(!isAttacked(board,backRow,3,opponent) && !isAttacked(board,backRow,2,opponent))
                 {
@@ -162,7 +157,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
       const qsSide=color==='white' ? castleRights.whiteQueenside :castleRights.blackQueenside;
       if (qsSide && !board[backRow][3] && !board[backRow][2] && !board[backRow][1])
       {
-        if (!isAttached(board,backRow,3,opponent) && !isAttacked(board,backRow,2,opponent)){
+        if (!isAttacked(board,backRow,3,opponent) && !isAttacked(board,backRow,2,opponent)){
             legal.push([backRow,2]);
         }
       }
@@ -175,12 +170,13 @@ function getPseudoMoves(board,row,col,enPassantTarget){
         for (let r=0;r<8;r++){
             for (let c=0;c<8;c++){
                 if (board[r][c] && pieceColor(board[r][c])===color){
-                    if (getLegalMoves(board,r,c,enPassantTarget,castleRight).length > 0) 
+                    if (getLegalMoves(board,r,c,enPassantTarget,castleRights).length > 0) 
                         return true;
 
                 }
             }
         }
+        return false;
       }
 
 
@@ -189,7 +185,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
             const isKingside=toCol===6;
             let notation = isKingside ? 'O-O' :'O-O-O';
             if (isMate) notation+='#';
-            else if (idCheck) notation+='+';
+            else if (isCheck) notation+='+';
             return notation;
         }
 
@@ -202,7 +198,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
         }
 
         if(isCapture){
-            if(type==='P') notation+=coltoFile(fromCol);
+            if(type==='P') notation+=colToFile(fromCol);
             notation+='x';
         }
 
