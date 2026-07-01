@@ -11,7 +11,7 @@ const PIECES={
     r:{symbol:'♜',color:'black',name:'Rook',value:5 },
     b:{symbol:'♝',color:'black',name:'Bishop',value:3 },
     n:{symbol:'♞',color:'black',name:'Knight',value:3 },
-    p:{symbol:'♟',color:'black',name:'Pawn',value:3} ,
+    p:{symbol:'♟',color:'black',name:'Pawn',value:1} ,
 };
 
 
@@ -36,7 +36,7 @@ function isWhite(code){
 }
 
 function isBlack(code){
-    return code && code==code.toLowerCase();
+    return code && code===code.toLowerCase();
 }
 
 function sameColor(a,b){
@@ -44,7 +44,7 @@ function sameColor(a,b){
     return isWhite(a)===isWhite(b);
 }
 
-function piececolor(code){
+function pieceColor(code){
  if(!code) return null;
  return isWhite(code)? 'white' : 'black' ;
 }

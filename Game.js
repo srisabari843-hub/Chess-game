@@ -2,14 +2,14 @@ let state={};
 
 function initGame(){
     state={
-        board:INITIAl_BOARD.map(row=>[...row]),
+        board:INITIAL_BOARD.map(row=>[...row]),
         turn:'white',
         selected:null,
         possibleMoves:[],
-        enPassantTarget:null,
+        enPassantTarget:null, 
         castleRights:{
             whiteKingside:true,
-            whiteQueensde:true,
+            whiteQueenside:true,
             blackKingside:true,
             blackQueenside:true,
         },
@@ -20,7 +20,8 @@ function initGame(){
         gameOver:false,
         checkCell:null,
         history:[],
-    };
+    };               
+     
 
 
     initBoardUI();
@@ -32,7 +33,7 @@ function initGame(){
 }
 
 function render(){
-    renderBoard(status.board,status.selected,state.possibleMoves,state.checkCell());
+    renderBoard(state.board,state.selected,state.possibleMoves,state.checkCell);
 }
 
 function handleCellClick(row,col)
@@ -44,17 +45,19 @@ const code=state.board[row][col];
 if (state.selected){
     const [selRow,selCol]=state.selected;
 
-if (code && placeColor(color)===state.turn){
+if (code && pieceColor(code)===state.turn){
     if(selRow===row && selCol===col){
-        state.selected=nukk;
+        state.selected=null;
         state.possibleMoves=[];
-        return;
+    render();
+    return;
     }
-    selectedPiece(row,col);
+    selectPiece(row,col);
     return;
 }
 
-const isLegal=state.possibleMoves.some(([r,c])=> r===row && c==col);
+
+const isLegal=state.possibleMoves.some(([r,c])=> r===row && c===col);
 if (isLegal){
     executeMove(selRow,selCol,row,col);
     return;
@@ -62,7 +65,7 @@ if (isLegal){
 
 
 state.selected=null;
-state.popssibleMoves=[];
+state.possibleMoves=[];
 render();
 return;
 }
@@ -82,9 +85,12 @@ function selectPiece(row,col){
     render();
 }
 
-function.history.pushState({
+function executeMove(fromRow,fromCol,toRow,toCol)
+{
+state.history.push({    
     board:copyBoard(state.board),
-    turn:state.enPassantTarget,
+    turn:state.turn,
+    enPassantTarget:state.enPassantTarget,
     castleRights:JSON.parse(JSON.stringify(state.castleRights)),
     whiteCaptured:[...state.whiteCaptured],
     blackCaptured:[...state.blackCaptured],
@@ -97,7 +103,7 @@ function.history.pushState({
  const movingType=movingCode.toUpperCase();
  const color=pieceColor(movingCode);
  let isCastle=false;
- let isEnPassant=false;
+ let isEnPassant=false; 
 
 
 
@@ -114,17 +120,18 @@ function.history.pushState({
     }
  }
 
- if (moviingType === 'P' && state.enPassantTarget && 
+ if (movingType === 'P' && state.enPassantTarget && 
     toRow===state.enPassantTarget[0] && toCol===state.enPassantTarget[1]){
-        isEnpassant=true;
-        const captured=state.board[capturedPawnRow][toCol];
+        isEnPassant=true;
+        const capturedPawnRow=color==='white' ? toRow+1 : toRow-1;
+        const epCaptured=state.board[capturedPawnRow][toCol];
         state.board[capturedPawnRow][toCol]=null;
-        if (olor==='white') state.whiteCaptured.push(epCaptured);
-        else state.blackCaptured.push(enCaptured);
-    }
+        if (color==='white') state.whiteCaptured.push(epCaptured);
+        else state.blackCaptured.push(epCaptured);
+    }   
 
  if (capturedCode){
-    if (color === 'White')state.whiteCaptured.push(capturedCode);
+    if (color === 'white')state.whiteCaptured.push(capturedCode);
     else state.blackCaptured.push(capturedCode);
  }
 
@@ -137,34 +144,38 @@ function.history.pushState({
         (fromRow+toRow)/2,
         toCol
     ];
- }
+ }     
+                
+ if (movingType==='K'){  
+    if (color==='white')
+        { state.castleRights.whiteKingside= false ; state.castleRights.whiteQueenside=false;}
 
- if (movingType==='K'){
-    if (color==='white'){ state.castleRights.whiteKingside= false ; state.castleRights.whiteQueenside=false;}
-    else   { state.castleRights.blackKingside=false;state.castleRights.blackQueenside=false;
+    else   { state.castleRights.blackKingside=false;state.castleRights.blackQueenside=false; }
+   }        
 
-    }
-    if (movingType==='R'){
-        if (movingType==='R'){
-            if (fromRow===7 && fromCol==7) state.castleRights.whiteKingSide=false;
+  if (movingType==='R'){
+            if (fromRow===7 && fromCol===7) state.castleRights.whiteKingside=false;
             if (fromRow===7 && fromCol===0)state.castleRights.whiteQueenside=false;
-            if (fromRow===0 && fromCol==7)state.castleRights.blackKingside=false;
+            if (fromRow===0 && fromCol===7)state.castleRights.blackKingside=false;
             if (fromRow===0 && fromCol===0)state.castleRights.blackQueenside=false;
 
         }
  
         const promotionRow=color==='white' ? 0 : 7;
-        if (mvingType==='P' && toRow===promotionRow){
+        if (movingType==='P' && toRow===promotionRow){
             showPromotionModal(color,(chosenCode)=>{
                 state.board[toRow][toCol]=chosenCode;
-                finishMove(fromRow,fromCol,toCol,capturedCode || (isEnPassant ? 'captured':null),isCastle,chosenCode);
+                finishMove(fromRow,fromCol,toRow,toCol,capturedCode || (isEnPassant ? 'captured' : null),isCastle,chosenCode);
 
             }); 
             return;          
         }
-
-        finishMove(fromRow,fromCol,torow,toCol,capturedCode || (isEnpassant ? 'captured' : null),isCastle,null);
+     
+        finishMove(fromRow,fromCol,toRow,toCol,capturedCode || (isEnPassant ? 'captured' : null),isCastle,null);
+    
     }
+
+    
 
     function finishMove(fromRow,fromCol,toRow,toCol,wasCapture,isCastle,promoted){
         const movingCode=state.board[toRow][toCol];
@@ -195,7 +206,7 @@ function.history.pushState({
             fromRow,fromCol,toRow,toCol,
             !!wasCapture , oppInCheck,oppInCheck && !oppHasMoves,isCastle)
             + (promoted ? '=' + promoted.toUpperCase() : '');
-
+ 
             if (color === 'white'){
                 addMoveToHistory(state.moveCount,notation,null);
             }
@@ -216,7 +227,7 @@ function.history.pushState({
                 }
             }
             else if (oppInCheck){
-                updateStatus(`${opponent.chartAt(0).toUppercase() + opponent.slice(1)} is in check!`,'check');
+                updateStatus(`${opponent.charAt(0).toUpperCase() + opponent.slice(1)} is in check!`,'check');
             }
             else{
                 updateStatus('Game in progress...','');
@@ -227,29 +238,47 @@ function.history.pushState({
             updateCaptured(state.whiteCaptured,state.blackCaptured);
             render();
 
-
+ 
     }
 
     function undoMove(){
         if (state.history.length===0) return ;
         const prev=state.history.pop();
-        
+        state.board=prev.board;
+        state.turn=prev.turn;
+        state.enPassantTarget=prev.enPassantTarget;
+        state.castleRights=prev.castleRights;
+        state.whiteCaptured=prev.whiteCaptured;
+        state.blackCaptured=prev.blackCaptured;
+        state.moveCount=prev.moveCount;
+        state.checkCell=prev.checkCell;
+        state.selected=null;
+        state.possibleMoves=[];
+        state.gameOver=false;
+    
+
+    const list=document.getElementById('moveList');
+    const entries=list.querySelectorAll('.move-entry');
+    if (entries.length > 0){
+        const last=entries[entries.length-1];
+        const blackSpan=last.querySelector('.move-black');
+        if (blackSpan && blackSpan.textContent){
+            blackSpan.textContent='';
+        }
+        else{
+            last.remove();
+        }
     }
+    
+    updateTurnIndicator(state.turn);
+    updateCaptured(state.whiteCaptured,state.blackCaptured);
+    updateStatus('Game in progress...', '');
+    render();
+}
 
+document.getElementById('newGameBtn').addEventListener('click',initGame);
+document.getElementById('undoBtn').addEventListener('click',undoMove);
 
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-      
- }
+initGame();
+   
+ 

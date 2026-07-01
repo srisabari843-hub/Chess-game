@@ -145,11 +145,11 @@ function getPseudoMoves(board,row,col,enPassantTarget){
         if(!isInCheck(board,color)){
             
             const ksSide=color==='white' ? castleRights.whiteKingside : castleRights.blackKingside;
-            if(ksSide && !board[backRow][3] && !board[backRow][2] && !board[backRow][2] && !board[backRow][1])
+            if(ksSide && !board[backRow][5] && !board[backRow][6])
             {
-                if(!isAttacked(board,backRow,3,opponent) && !isAttacked(board,backRow,2,opponent))
+                if(!isAttacked(board,backRow,5,opponent) && !isAttacked(board,backRow,6,opponent))
                 {
-                    legal.push([backRow,2]);
+                    legal.push([backRow,6]);
                 }
             }
         
@@ -165,6 +165,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
 }
     return legal;
 }
+
 
       function hasAnyLegalMoves(board,color,enPassantTarget,castleRights){
         for (let r=0;r<8;r++){
