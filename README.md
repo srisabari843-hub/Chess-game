@@ -6,7 +6,7 @@ Features
    => full legal Move Generation-Pawns,Knights,Bishops,rooks,Queens,and Kings,all following standard chess rules.
    => Check,Checkmate & stalemate detection.
    => Castling (kingside & queenside),with proper rules: king not in check, path not attecked ,path clear.
-   =>EnPassant captures
+   =>EnPassant captures.
    => Pawn promotion with piece-choice modal (Queen,Rook,Bishop,Knight) 
    =>Move history panel with algebric notation.
    =>Captures piece tracker for both sides
@@ -29,10 +29,10 @@ Chess Game
 
 
 File responsibilities
-    pieces.js==Defines PIECES,INITIAL_BOARD,and utility  functions like isWhite,pieceColor,copyBoard,toAlgebraic
-    moves.js==pure move logic:getPseudoMoves,getLegalMoves,isINCheck,isAttacked,hasAnyLegalMoves,BuildMovesNotation
-    board.js==All DOM manipulation:rendering cells/pieces,updating panels,showing the promotion modal.
-    game.js=orchestrates everything:holds state,handles click,execute,move,undo/redo.
+   1->eces.js==Defines PIECES,INITIAL_BOARD,and utility  functions like isWhite,pieceColor,copyBoard,toAlgebraic
+   2->moves.js==pure move logic:getPseudoMoves,getLegalMoves,isINCheck,isAttacked,hasAnyLegalMoves,BuildMovesNotation
+    3->board.js==All DOM manipulation:rendering cells/pieces,updating panels,showing the promotion modal.
+    4->game.js=orchestrates everything:holds state,handles click,execute,move,undo/redo.
 
 The Separation keeps game logic (mmoves.js) independent of rendering (boardds.js),so the rule engine could be reused (eg: for an AI opponent) without touching the UI.
 
@@ -53,7 +53,20 @@ How TO Play
 How to Move The Engine Works
    1==>getPseudoMoves generate all moves a piece could make based on movement patterns along (ignoring checks).
    2==> isAttacked/isInCheck scan the board to see if a square or king is under attack.
-    
+   3==>getLegalMoves filters pseudo-moves by simulating each one on a board copy and rejecting any that leave the mover's own king in check,it also appends castling moves when condition are met.
+   4==>hasAnyLegaMoves checks every piece of a color to determine checkmate vs stalemate.
+   5==>buildMoveNotation converts a move into standard algebraic notation for the move history panel.
+
+Special case handling:
+   =>En passant is tracked via state.enPassantTarget,set after any two-squre pawn push and cleared every other move.
+   =>castling rights are revoked the moment a king or rook moves (or a rook is captured on its home square,if extended).
+   =>undo works by snapshoting the entire relevant game state (board,turn,castleRights,enPassantTarget,captured list) before every move.
+
+Known Limitations/possible Improvements
+=>no dismabiguation in notation for two identical pieces that an reach the same square eg:Nbd7.
+=>No Draw detection for threefold repetition or the 50-move rule.
+=>no Support for resigning or offering a draw.
+=>no sound effects/move animation.
     
 
  
