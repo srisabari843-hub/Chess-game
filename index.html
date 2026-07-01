@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChessGame</title>
     <link rel="stylesheet" href="style.css"/>
-    <link href="'https.//fonts:googleapis.com/css2?family=Cinzel:wgt@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
     
 
 </head>
@@ -16,7 +16,7 @@
     <aside class="sidebar">
         <div class="logo">
         <span class="logo-icon">♔</span>
-        <h1>CHESS<span>Master</span></h1>
+        <h1>CHESS<span>MASTER</span></h1>
         </div>
     <div class="turn-panel">
         <div class="turn-label">CURRENT TURN</div>
@@ -40,41 +40,43 @@
             <div class="captured-label">BLACK  captured</div>
             <div class="captured-pieces" id="blackCaptured"></div>
         </div>
- 
-        <div class="move-history-panel">
+     </div>
+
+        <div class="move-history-panel"> 
             <div class="panel-title">MOVE HISTORY</div>
-            <div class="move-list"id=moveList></div>
+            <div class="move-list" id="moveList"></div>
         </div>
+
          
         <div class="controls">
             <button class="btn-primary" id="newGameBtn">New Game</button>
-            <button class="btn-secondary" id="undiBtn">Undo Move</button>
+            <button class="btn-secondary" id="undoBtn">Undo Move</button>
         </div>
-    </aside>
+    </aside>    
        
 
-     <main class="border-area">
-        <div class="border-wrapped">
-            <div class="rank-lables" id="rankLabels"></div>
-            <div class="border-col">
-               <div class="border" id="chessBord"></div>
-               <div class="file-Lables" id="fileLables"></div> 
+     <main class="board-area">
+        <div class="board-wrapper">
+            <div class="rank-labels" id="rankLabels"></div>
+            <div class="board-col">
+               <div class="board" id="chessBoard"></div>
+               <div class="file-labels" id="fileLabels"></div> 
             </div>
         </div>
      </main>
     </div>
 
 
-  <div class="model-overlay" id="promotionModel">
-    <div class="model">
+  <div class="modal-overlay" id="promotionModal">
+    <div class="modal">
         <h2>Promote Pawn</h2>
-        <p>Choose a piece;</p>
-        <div class="promotion-choice" id="promotionChoice"></div>
+        <p>Choose a piece:</p>
+        <div class="promotion-choices" id="promotionChoices"></div>
     </div>
   </div>
 
    <script src="pieces.js"></script>
-   <script src="bord.js"></script>
+   <script src="board.js"></script>
    <script src="moves.js"></script>
    <script src="game.js"></script>
    
