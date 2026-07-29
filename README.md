@@ -1,4 +1,4 @@
-Chess Game
+Vennilla JavaScript Chess GAme with Full Rule Engine
   A fully playable ,single-page chess game built with vanilla HTML,CSS,and JavaScript.
 
 
@@ -14,6 +14,15 @@ Features
    => Turn indicator and live games status (in Progress/check/checkmate/stalemate)
    =>elegant dark-gold themed UI with customer board styling and animations
 
+
+
+
+#Getting Started
+
+No installation or build step is requiredbecause this project uses only vanilla HTML
+1.download or clone the project Folder
+2.open 'Index.html in any modern web browser
+the game innstall automatically 
 
 
 Project Structure
