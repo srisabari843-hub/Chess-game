@@ -17,17 +17,16 @@ Features
 
 
 
-#Getting Started
-
-No installation or build step is requiredbecause this project uses only vanilla HTML
-1.download or clone the project Folder
-2.open 'Index.html in any modern web browser
-the game innstall automatically 
+Getting Started
+    No installation or build step is requiredbecause this project uses only vanilla HTML
+    1.download or clone the project Folder
+    2.open 'Index.html in any modern web browser
+    the game innstall automatically 
 
 
 Project Structure
 
-Chess Game
+Chess BOLD
   index.html
   style.css
   pieces.js
