@@ -12,6 +12,7 @@ function initBoardUI(){
             boardE1.appendChild(cell);
         }
     }
+    
 
     const rankLabels=document.getElementById('rankLabels');
     rankLabels.innerHTML='';
