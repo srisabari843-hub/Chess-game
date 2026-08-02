@@ -3,7 +3,7 @@ let state={};
 function initGame(){
     state={
         board:INITIAL_BOARD.map(row=>[...row]),
-        turn:'white',
+        turn: 'white',
         selected:null,
         possibleMoves:[],
         enPassantTarget:null, 

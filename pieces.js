@@ -13,6 +13,7 @@ const PIECES={
     n:{symbol:'♞',color:'black',name:'Knight',value:3 },
     p:{symbol:'♟',color:'black',name:'Pawn',value:1} ,
 };
+   
 
 
 const INITIAL_BOARD=[

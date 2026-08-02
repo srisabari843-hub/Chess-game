@@ -9,7 +9,7 @@ function getPseudoMoves(board,row,col,enPassantTarget){
 
     function inBounds(r,c){
         return r >=0 && r < 8 && c >=0 && c <8;
-    }
+    } 
 
     function addMove(r,c){
         if (!inBounds(r,c)) return false;
