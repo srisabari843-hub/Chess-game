@@ -15,14 +15,40 @@ Features
    =>elegant dark-gold themed UI with customer board styling and animations
 
 
+Local Setup
+
+  Prerequistites
+
+    1 modern web browser(chrome,firebox,edge,safari)
+    2 git (optional, for cloninh the repository)
+
+  Clone repository
+
+      since the project s built with HTML,CSS,Vanilla Javascript , No installation or build process is required
+
+  Run the project 
+  
+    since this is built in HTML,CS,Vaanilla Javascript,no installation or build process is required
+
+  =>you can run it in either of these ways.
 
 
-Getting Started
-    No installation or build step is requiredbecause this project uses only vanilla HTML
-    1.download or clone the project Folder
-    2.open 'Index.html in any modern web browser
-    the game innstall automatically 
+Optional 1:OPen the HTML File
+   =>Open index.hrml file directly in your browser
+Optional 2:Use VS Code Live Server
+    1) Open the project in Visula Studio code
+    3) Install Live Server Extension if you DOn't already have it.
+    4) right Click index.html.
+    Select open with liver server
 
+  
+
+Browser Compatibility
+  The project works in the latest version of:
+    Google Chrome
+    Mozilla Firebox
+    microsoft Edge
+    Safari
 
 Project Structure
 
